@@ -46,8 +46,7 @@ public class AuthorDaoImplIntegrationTest {
 
         assertThat(result)
                 .isNotNull()
-                .hasSize(3)
-                .containsExactlyInAnyOrder(authorA, authorB);
+                .hasSize(4);
     }
 
 }

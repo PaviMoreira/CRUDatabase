@@ -45,4 +45,13 @@ public class BookDaoImplTest {
         );
 
     }
+
+    @Test
+    public void testThatFindManyBookGeneratesCorrectSql(){
+        underTest.findManyBook();
+        verify(jdbcTemplate).query(
+                eq("SELECT id, title, authorId FROM books"),
+                ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any()
+        );
+    }
 }

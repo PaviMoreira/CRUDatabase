@@ -39,6 +39,13 @@ public class BookDaoImpl implements BookDAO {
 
     }
 
+    @Override
+    public List<Book> findManyBook() {
+        return jdbcTemplate.query(
+                "SELECT id, title, authorId FROM books",
+                new BookDaoImpl.BookRowMapper());
+    }
+
 
     public static class BookRowMapper implements RowMapper<Book> {
 
@@ -46,10 +53,9 @@ public class BookDaoImpl implements BookDAO {
         public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
             return Book.builder()
                     .id(rs.getLong("id"))
-                    .title(rs.getString("name"))
+                    .title(rs.getString("title"))
                     .authorId(rs.getLong("authorId"))
                     .build();
         }
     }
-
 }

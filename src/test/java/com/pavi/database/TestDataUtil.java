@@ -33,11 +33,20 @@ public final class TestDataUtil {
                 build();
     }
 
+
     public static Book CreateTestBook() {
         return Book.builder().
                 id(1L).
                 title("No way out").
                 authorId(1L).
+                build();
+    }
+
+    public static Book CreateTestBook2() {
+        return Book.builder().
+                id(2L).
+                title("I'm a potato").
+                authorId(2L).
                 build();
     }
 }
