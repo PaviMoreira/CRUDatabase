@@ -20,7 +20,6 @@ public class BookDaoImpl implements BookDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // Create
     @Override
     public void create(Book book){
         jdbcTemplate.update(
@@ -28,7 +27,6 @@ public class BookDaoImpl implements BookDAO {
                 book.getId(),book.getTitle(),book.getAuthorId());
     }
 
-    // Find 1
     @Override
     public Optional<Book> findOneBook(long id) {
 
@@ -46,7 +44,15 @@ public class BookDaoImpl implements BookDAO {
                 new BookDaoImpl.BookRowMapper());
     }
 
+    @Override
+    public void update(long id, Book book) {
+        jdbcTemplate.update(
+                "UPDATE books SET title = ?, authorId = ? WHERE id = ?",
+                book.getTitle(),book.getAuthorId(),id
+        );
+    }
 
+    // Map through the row
     public static class BookRowMapper implements RowMapper<Book> {
 
         @Override

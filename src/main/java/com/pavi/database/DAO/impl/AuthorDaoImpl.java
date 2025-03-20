@@ -20,7 +20,6 @@ public class AuthorDaoImpl implements AuthorDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // Create
     @Override
     public void create(Author author) {
         jdbcTemplate.update(
@@ -28,7 +27,6 @@ public class AuthorDaoImpl implements AuthorDAO {
                 author.getId(),author.getName(),author.getAge());
     }
 
-    // Read 1
     @Override
     public Optional<Author> findOneAuthor(long authorId) {
 
@@ -38,8 +36,6 @@ public class AuthorDaoImpl implements AuthorDAO {
         return results.stream().findFirst();
     }
 
-
-    // Read All
     @Override
     public List<Author> findManyAuthor() {
         return jdbcTemplate.query(
@@ -47,6 +43,15 @@ public class AuthorDaoImpl implements AuthorDAO {
                 new AuthorRowMapper());
     }
 
+    @Override
+    public void update(long id, Author author) {
+        jdbcTemplate.update(
+                "UPDATE author SET name = ?, age = ? WHERE id = ?",
+                author.getName(),author.getAge(),id
+        );
+    }
+
+    // Map through the row
     public static class AuthorRowMapper implements RowMapper<Author>{
 
         @Override

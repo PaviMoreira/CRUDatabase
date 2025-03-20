@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -17,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 public class AuthorDaoImplIntegrationTest {
 
-    private AuthorDaoImpl underTest;
+    private final AuthorDaoImpl underTest;
 
     @Autowired
     public AuthorDaoImplIntegrationTest(AuthorDaoImpl underTest){
@@ -33,7 +35,7 @@ public class AuthorDaoImplIntegrationTest {
         assertThat(result).isPresent();
         assertThat(author).isEqualTo(author);
     }
-     */
+
 
     @Test
     public void testThatManyAuthorCanBeCreatedAndRecalled(){
@@ -47,6 +49,21 @@ public class AuthorDaoImplIntegrationTest {
         assertThat(result)
                 .isNotNull()
                 .hasSize(4);
+    }
+     */
+
+    @Test
+    public void testThatUpdatesAuthor(){
+        Author authorA = TestDataUtil.CreateTestAuthorA();
+        underTest.create(authorA);
+        Author authorB = TestDataUtil.CreateTestAuthorB();
+
+        underTest.update(authorA.getId(),authorB);
+
+        Optional<Author> result = underTest.findOneAuthor(authorA.getId());
+
+        assertThat(result).isPresent().isNotNull();
+        assertThat(result.get().getName()).isEqualTo(authorB.getName());
     }
 
 }

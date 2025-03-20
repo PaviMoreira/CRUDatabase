@@ -1,6 +1,5 @@
 package com.pavi.database.DAO;
 
-import com.pavi.database.domain.Author;
 import com.pavi.database.domain.Book;
 
 import java.util.List;
@@ -12,4 +11,6 @@ public interface BookDAO {
     Optional<Book> findOneBook(long l);
 
     List<Book> findManyBook();
+
+    void update(long l, Book book);
 }

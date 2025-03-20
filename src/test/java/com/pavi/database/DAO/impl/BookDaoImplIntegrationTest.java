@@ -37,7 +37,7 @@ public class BookDaoImplIntegrationTest {
         assertThat(result).isPresent();
         assertThat(book).isEqualTo(book);
     }
-     */
+
 
     @Test
     public void testThatManyAuthorCanBeCreatedAndRecalled(){
@@ -54,6 +54,22 @@ public class BookDaoImplIntegrationTest {
         Assertions.assertThat(result)
                 .isNotNull()
                 .hasSize(2);
+    }
+
+     */
+
+    @Test
+    public void testThatUpdatesBook(){
+        Book book = TestDataUtil.CreateTestBook();
+        underTest.create(book);
+        Book book2 = TestDataUtil.CreateTestBook2();
+
+        underTest.update(book.getId(),book2);
+
+        Optional<Book> result = underTest.findOneBook(book.getId());
+
+        Assertions.assertThat(result).isPresent().isNotNull();
+        Assertions.assertThat(result.get().getTitle()).isEqualTo(book2.getTitle());
     }
 
 }

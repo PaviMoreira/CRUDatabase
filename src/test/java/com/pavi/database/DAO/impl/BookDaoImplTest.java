@@ -1,6 +1,7 @@
 package com.pavi.database.DAO.impl;
 
 import com.pavi.database.TestDataUtil;
+import com.pavi.database.domain.Author;
 import com.pavi.database.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,4 +55,19 @@ public class BookDaoImplTest {
                 ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any()
         );
     }
+
+    @Test
+    public void testThatUpdatesBookByIdGeneratesCorrectSql(){
+
+        Book book = TestDataUtil.CreateTestBook();
+        underTest.create(book);
+        Book book1 = TestDataUtil.CreateTestBook2();
+
+        underTest.update(book.getId(),book1);
+
+        verify(jdbcTemplate).update(
+                eq("UPDATE books SET title = ?, authorId = ? WHERE id = ?"),
+                eq("I'm a potato"), eq(2L), eq(1L));
+    }
+
 }
