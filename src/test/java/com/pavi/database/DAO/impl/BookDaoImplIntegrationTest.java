@@ -21,7 +21,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ExtendWith(SpringExtension.class)
 public class BookDaoImplIntegrationTest {
 
-    private BookDaoImpl underTest;
+    private final BookDaoImpl underTest;
 
     @Autowired
     public BookDaoImplIntegrationTest(BookDaoImpl underTest){
@@ -56,7 +56,7 @@ public class BookDaoImplIntegrationTest {
                 .hasSize(2);
     }
 
-     */
+
 
     @Test
     public void testThatUpdatesBook(){
@@ -70,6 +70,20 @@ public class BookDaoImplIntegrationTest {
 
         Assertions.assertThat(result).isPresent().isNotNull();
         Assertions.assertThat(result.get().getTitle()).isEqualTo(book2.getTitle());
+    }
+
+    */
+
+    @Test
+    public void testThatDeletesBook(){
+        Book book = TestDataUtil.CreateTestBook();
+        underTest.create(book);
+
+        underTest.delete(book.getId());
+
+        Optional<Book> result = underTest.findOneBook(book.getId());
+
+        Assertions.assertThat(result).isEmpty();
     }
 
 }

@@ -70,4 +70,14 @@ public class BookDaoImplTest {
                 eq("I'm a potato"), eq(2L), eq(1L));
     }
 
+    @Test
+    public void testThatDeletesBookGeneratesCorrectSql(){
+
+        underTest.delete(1L);
+        verify(jdbcTemplate).update(
+                "DELETE FROM book WHERE id = ?",
+                1L
+        );
+    }
+
 }

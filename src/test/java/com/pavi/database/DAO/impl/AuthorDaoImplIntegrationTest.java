@@ -50,7 +50,7 @@ public class AuthorDaoImplIntegrationTest {
                 .isNotNull()
                 .hasSize(4);
     }
-     */
+
 
     @Test
     public void testThatUpdatesAuthor(){
@@ -64,6 +64,20 @@ public class AuthorDaoImplIntegrationTest {
 
         assertThat(result).isPresent().isNotNull();
         assertThat(result.get().getName()).isEqualTo(authorB.getName());
+    }
+
+     */
+
+    @Test
+    public void testThatDeletesAuthor(){
+        Author author = TestDataUtil.CreateTestAuthor();
+        underTest.create(author);
+
+        underTest.delete(author.getId());
+
+        Optional<Author> result = underTest.findOneAuthor(author.getId());
+
+        assertThat(result).isEmpty();
     }
 
 }
